@@ -3,178 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISO Dağıtım Merkezi</title>
+    <title>Radix OS | Official Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #58a6ff;
-            --bg: #0d1117;
-            --card-bg: rgba(22, 27, 34, 0.8);
+            --primary: #58a6ff; /* Radix Mavisi */
+            --bg: #05070a;
+            --card-bg: rgba(13, 17, 23, 0.9);
             --border: #30363d;
             --text: #c9d1d9;
+            --neon-glow: 0 0 15px rgba(88, 166, 255, 0.5);
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Fira Code', 'Courier New', monospace; /* Yazılımcı fontu */
             background-color: var(--bg);
-            background-image: radial-gradient(circle at top right, #161b22, #0d1117);
+            background-image: radial-gradient(circle at center, #10141b 0%, #05070a 100%);
             color: var(--text);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Üst Menü */
+        nav {
+            width: 100%;
+            padding: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+            text-shadow: var(--neon-glow);
+        }
+
+        /* LED Karşılama Ekranı */
+        .welcome-section {
+            margin: 60px 0;
+            text-align: center;
+            padding: 50px;
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            background: rgba(88, 166, 255, 0.03);
+            box-shadow: inset 0 0 20px rgba(88, 166, 255, 0.05), var(--neon-glow);
+            min-width: 320px;
+        }
+
+        #welcome-text {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            margin: 0;
+            transition: opacity 0.4s ease-in-out;
+            letter-spacing: 5px;
+        }
+
+        .os-version {
+            color: #444;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            letter-spacing: 3px;
+        }
+
+        /* Sistem Kartları */
         .container {
             width: 90%;
-            max-width: 900px;
-            padding: 40px;
-            text-align: center;
+            max-width: 1000px;
+            padding-bottom: 50px;
         }
 
-        .header {
-            margin-bottom: 50px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .header p {
-            color: #8b949e;
-            font-size: 1.1rem;
-        }
-
-        /* ISO Kartları Düzeni */
         .iso-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
         }
 
         .iso-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 25px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 30px;
+            transition: 0.4s;
             position: relative;
-            overflow: hidden;
         }
 
         .iso-card:hover {
-            transform: translateY(-10px);
             border-color: var(--primary);
-            box-shadow: 0 10px 30px rgba(88, 166, 255, 0.1);
+            transform: scale(1.02);
+            background: rgba(13, 17, 23, 1);
         }
 
         .iso-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .iso-title {
-            font-size: 1.4rem;
-            margin: 10px 0;
-            font-weight: 600;
-        }
-
-        .iso-info {
-            font-size: 0.9rem;
-            color: #8b949e;
             margin-bottom: 20px;
         }
 
         .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #238636;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
+            display: block;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            width: 100%;
-            box-sizing: border-box;
-            transition: background 0.2s;
+            margin-top: 20px;
+            transition: 0.3s;
         }
 
         .download-btn:hover {
-            background: #2ea043;
+            background: var(--primary);
+            color: var(--bg);
+            box-shadow: var(--neon-glow);
         }
 
-        .download-btn i {
-            margin-right: 10px;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        /* Alt Bilgi */
+        footer {
+            margin-top: auto;
+            padding: 30px;
+            color: #444;
             font-size: 0.8rem;
-            margin-top: 15px;
-            color: #3fb950;
-        }
-
-        .status-dot {
-            height: 8px;
-            width: 8px;
-            background-color: #3fb950;
-            border-radius: 50%;
-            margin-right: 8px;
-            box-shadow: 0 0 10px #3fb950;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1><i class="fas fa-server"></i> ISO Cloud Hub</h1>
-        <p>Yüksek hızlı, 7/24 kesintisiz işletim sistemi dağıtım merkezi.</p>
+    <nav>
+        <a href="#welcome"><i class="fas fa-terminal"></i> Welcome</a>
+        <a href="#downloads"><i class="fas fa-download"></i> Downloads</a>
+        <a href="#about"><i class="fas fa-microchip"></i> About OS</a>
+    </nav>
+
+    <div class="welcome-section" id="welcome">
+        <div class="iso-icon"><i class="fas fa-atom fa-spin"></i></div>
+        <p id="welcome-text">LOADING</p>
+        <p class="os-version">RADIX OS PROJECT v1.0.4-BETA</p>
     </div>
 
-    <div class="iso-grid">
-        <div class="iso-card">
-            <div class="iso-icon"><i class="fab fa-windows"></i></div>
-            <div class="iso-title">Windows Pro Custom</div>
-            <div class="iso-info">Boyut: 4.2 GB <br> Versiyon: v2026.1</div>
-            <a href="BURAYA_LİNK_1" class="download-btn">
-                <i class="fas fa-download"></i> İndir
-            </a>
-            <div class="status"><span class="status-dot"></span> Sunucu Aktif</div>
-        </div>
+    <div class="container" id="downloads">
+        <div class="iso-grid">
+            <div class="iso-card">
+                <i class="fab fa-linux iso-icon"></i>
+                <h3>Radix Core ISO</h3>
+                <p>Minimalist kernel, Hyprland ready, ultra-fast performance.</p>
+                <a href="#" class="download-btn">GET CORE</a>
+            </div>
 
-        <div class="iso-card">
-            <div class="iso-icon"><i class="fab fa-linux"></i></div>
-            <div class="iso-title">Linux Lite Mod</div>
-            <div class="iso-info">Boyut: 1.8 GB <br> Versiyon: Stable</div>
-            <a href="BURAYA_LİNK_2" class="download-btn">
-                <i class="fas fa-download"></i> İndir
-            </a>
-            <div class="status"><span class="status-dot"></span> Sunucu Aktif</div>
-        </div>
-
-        <div class="iso-card">
-            <div class="iso-icon"><i class="fas fa-compact-disc"></i></div>
-            <div class="iso-title">Rescue Disk ISO</div>
-            <div class="iso-info">Boyut: 650 MB <br> Kurtarma Aracı</div>
-            <a href="BURAYA_LİNK_3" class="download-btn">
-                <i class="fas fa-download"></i> İndir
-            </a>
-            <div class="status"><span class="status-dot"></span> Sunucu Aktif</div>
+            <div class="iso-card">
+                <i class="fas fa-tools iso-icon"></i>
+                <h3>Radix SDK</h3>
+                <p>Build your own modules for the Radix environment.</p>
+                <a href="#" class="download-btn">GET SDK</a>
+            </div>
         </div>
     </div>
-</div>
 
+    <footer id="about">
+        &copy; 2026 Radix OS Project. No affiliation with previous "Radix" versions.
+    </footer>
+
+    <script>
+        // LED Yazı Değişimi (Çok Dilli)
+        const words = [
+            "WELCOME",       // EN
+            "HOŞ GELDİNİZ",    // TR
+            "ДОБРО ПОЖАЛОВАТЬ", // RU
+            "WILLKOMMEN",     // DE
+            "BIENVENUE",      // FR
+            "SYSTEM READY"    // OS Temalı
+        ];
+
+        let i = 0;
+        const textElement = document.getElementById("welcome-text");
+
+        function updateText() {
+            textElement.style.opacity = "0";
+            setTimeout(() => {
+                i = (i + 1) % words.length;
+                textElement.innerText = words[i];
+                textElement.style.opacity = "1";
+            }, 500);
+        }
+
+        setInterval(updateText, 3000);
+    </script>
 </body>
 </html>
