@@ -23,12 +23,31 @@
             background-color: var(--bg);
             color: var(--text);
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* --- HYPRLAND STYLE NAV BAR --- */
+        /* --- GİRİŞ ANİMASYONLARI --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes ledPulse {
+            from { opacity: 0.4; text-shadow: 0 0 5px var(--danger); }
+            to { opacity: 1; text-shadow: 0 0 15px var(--danger), 0 0 25px var(--danger); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* --- NAV BAR --- */
         header {
             position: fixed; top: 20px; width: 100%;
             display: flex; justify-content: center; z-index: 1000;
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .nav-container {
@@ -53,12 +72,11 @@
             text-decoration: none; font-size: 0.85rem; transition: 0.3s;
         }
 
-        .btn-install:hover { transform: scale(1.05); box-shadow: var(--neon); }
-
-        /* --- GİRİŞ EKRANI (HERO) --- */
+        /* --- HERO --- */
         .hero {
             height: 100vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
+            animation: fadeInUp 1s ease-out;
         }
 
         .title-main {
@@ -66,16 +84,16 @@
             background: linear-gradient(135deg, var(--primary), var(--accent));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: -2px;
+            animation: float 4s ease-in-out infinite;
         }
 
-        /* LED DİL EKRANI */
         #led-display {
             font-family: 'Fira Code', monospace; font-size: 1.2rem;
             color: var(--accent); margin-top: 20px; min-height: 30px;
             text-shadow: 0 0 10px var(--accent); opacity: 0.8;
         }
 
-        /* --- İNDİRME BÖLÜMÜ (SÜRÜMLER) --- */
+        /* --- RELEASES --- */
         .section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
         
         .grid {
@@ -87,29 +105,43 @@
             background: var(--glass); border: 1px solid var(--border);
             padding: 35px; border-radius: 24px; text-align: center;
             transition: 0.3s; position: relative;
+            opacity: 0; animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        .card:hover { border-color: var(--primary); transform: translateY(-10px); }
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
 
+        .card:hover { border-color: var(--primary); transform: translateY(-10px); box-shadow: var(--neon); }
         .card i { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
 
-        /* İNDİR TUŞU VE SERVER DURUMU */
+        /* --- SERVER KAPALI (LED MOD) --- */
         .dl-btn {
-            display: block; background: rgba(255,255,255,0.05);
-            color: #555; border: 1px solid #333; padding: 15px;
+            display: block; background: rgba(255,255,255,0.03);
+            color: #444; border: 1px solid #222; padding: 15px;
             border-radius: 12px; text-decoration: none; font-weight: bold;
             margin-top: 25px; cursor: not-allowed; pointer-events: none;
+            transition: 0.3s;
         }
 
         .server-status {
-            font-size: 0.75rem; color: var(--danger); margin-top: 10px;
-            display: flex; align-items: center; justify-content: center; gap: 5px;
+            font-size: 0.8rem; color: var(--danger); margin-top: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            animation: ledPulse 1.5s infinite alternate; /* PARLAMA BURADA */
         }
 
-        /* --- HAKKINDA BÖLÜMÜ --- */
+        .server-status i {
+            font-size: 0.6rem;
+            filter: drop-shadow(0 0 5px var(--danger));
+        }
+
+        /* --- ABOUT --- */
         .about-box {
             background: var(--glass); border: 1px solid var(--border);
             padding: 50px; border-radius: 30px; line-height: 1.8;
+            opacity: 0; animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.8s;
         }
 
     </style>
@@ -121,8 +153,8 @@
             <a href="#home">Home</a>
             <a href="#releases">Releases</a>
             <a href="#about">About</a>
-            <a href="https://discord.gg/YOUR_LINK" target="_blank"><i class="fab fa-discord"></i> Discord</a>
-            <a href="https://github.com/YOUR_USERNAME" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#"><i class="fab fa-discord"></i> Discord</a>
+            <a href="#"><i class="fab fa-github"></i> GitHub</a>
             <a href="javascript:void(0)" onclick="document.getElementById('releases').scrollIntoView()" class="btn-install">INSTALL</a>
         </div>
     </header>
@@ -134,14 +166,14 @@
     </div>
 
     <div class="section" id="releases">
-        <h2 style="text-align: center; font-size: 2.5rem; color: var(--primary);">Official ISO Releases</h2>
+        <h2 style="text-align: center; font-size: 2.5rem; color: var(--primary); animation: fadeInUp 0.8s ease-out;">Official ISO Releases</h2>
         <div class="grid">
             <div class="card">
                 <i class="fas fa-microchip"></i>
                 <h3>Rach OS Standart</h3>
                 <p>Minimalist ve hızlı çekirdek sürümü.</p>
                 <a href="#" class="dl-btn">İNDİR (ISO)</a>
-                <div class="server-status"><i class="fas fa-circle"></i> Server Kapalı</div>
+                <div class="server-status"><i class="fas fa-circle"></i> SERVER KAPALI</div>
             </div>
 
             <div class="card">
@@ -149,7 +181,7 @@
                 <h3>Rach OS Live GUI</h3>
                 <p>Full grafik arayüzlü deneme medyası.</p>
                 <a href="#" class="dl-btn">İNDİR (ISO)</a>
-                <div class="server-status"><i class="fas fa-circle"></i> Server Kapalı</div>
+                <div class="server-status"><i class="fas fa-circle"></i> SERVER KAPALI</div>
             </div>
 
             <div class="card">
@@ -157,7 +189,7 @@
                 <h3>Education Edition</h3>
                 <p>Türkiye'deki okullar ve öğrenciler için özel araçlar.</p>
                 <a href="#" class="dl-btn">İNDİR (ISO)</a>
-                <div class="server-status"><i class="fas fa-circle"></i> Server Kapalı</div>
+                <div class="server-status"><i class="fas fa-circle"></i> SERVER KAPALI</div>
             </div>
         </div>
     </div>
@@ -170,7 +202,6 @@
     </div>
 
     <script>
-        // 30 DİL LED SİSTEMİ
         const langs = ["WELCOME", "HOŞ GELDİNİZ", "SHAGATOM", "NAMASTE", "SWAGATAM", "BIENVENUE", "WILLKOMMEN", "BIENVENIDOS", "BEM-VINDO", "BENVENUTO", "WITAJ", "ÜDVÖZÖLJÜK", "VÄLKOMMEN", "VELKOMMEN", "TERVETULOA", "DOBRODOŠLI", "KALOS ILTHATE", "SALAM", "TIKRILL", "MARHABA", "AHALAN", "ALOHA", "BONVENON", "RACH OS", "READY"];
         let i = 0;
         setInterval(() => {
